@@ -13,53 +13,54 @@ erDiagram
     USUARIO ||--o{ AVALIACAO : realiza
 
     UNIDADE_NEGOCIO {
-        int id_unidade PK
-        string nome_unidade
+        int id_unidade
+        text nome_unidade
     }
 
     VAGA {
-        int id_vaga PK
-        int id_unidade FK
-        string nome_vaga
-        string descricao_perfil
+        int id_vaga
+        int id_unidade
+        text nome_vaga
+        text descricao_perfil
     }
 
     CANDIDATO {
-        int id_candidato PK
-        string nome_candidato
-        string email
+        int id_candidato
+        text nome_candidato
+        text email
     }
 
     PROCESSO_SELETIVO {
-        int id_processo_seletivo PK
-        int id_candidato FK
-        int id_vaga FK
-        int id_status_processo FK
-        string resultado_final
+        int id_processo_seletivo
+        int id_candidato
+        int id_vaga
+        int id_status_processo
+        text resultado_final
     }
 
     STATUS_PROCESSO {
-        int id_status_processo PK
-        string nome_status
+        int id_status_processo
+        text nome_status
     }
 
     AVALIACAO {
-        int id_avaliacao PK
-        int id_processo_seletivo FK
-        int id_tipo_avaliacao FK
-        int id_usuario FK
-        decimal nota
-        string resultado
+        int id_avaliacao
+        int id_processo_seletivo
+        int id_tipo_avaliacao
+        int id_usuario
+        float nota
+        text resultado
     }
 
     TIPO_AVALIACAO {
-        int id_tipo_avaliacao PK
-        string nome_tipo_avaliacao
+        int id_tipo_avaliacao
+        text nome_tipo_avaliacao
     }
 
     USUARIO {
-        int id_usuario PK
-        string nome_usuario
-        string perfil
+        int id_usuario
+        text nome_usuario
+        text perfil
     }
+
 ```
