@@ -62,5 +62,4 @@ erDiagram
         text nome_usuario
         text perfil
     }
-
 ```
