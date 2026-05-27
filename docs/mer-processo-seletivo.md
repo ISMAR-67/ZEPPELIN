@@ -2,11 +2,13 @@
 
 ```mermaid
 erDiagram
-    CLIENTE ||--o{ PEDIDO : faz
+    CLIENTE ||--o{ PEDIDO : possui
+
     CLIENTE {
         int id
         string nome
     }
+
     PEDIDO {
         int id
         int cliente_id
