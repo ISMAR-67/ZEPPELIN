@@ -1,0 +1,211 @@
+docs/modelo-mer.md
+  # Modelo MER - Processo Seletivo
+erDiagram
+
+    UNIDADE_NEGOCIO ||--o{ VAGA : possui
+    VAGA ||--o{ PROCESSO_SELETIVO : recebe
+    CANDIDATO ||--o{ PROCESSO_SELETIVO : participa
+    STATUS_PROCESSO ||--o{ PROCESSO_SELETIVO : classifica
+
+    VAGA ||--o{ VAGA_ETAPA : possui
+    ETAPA_PROCESSO ||--o{ VAGA_ETAPA : compoe
+
+    ETAPA_PROCESSO ||--o{ ETAPA_COMPETENCIA : exige
+    COMPETENCIA ||--o{ ETAPA_COMPETENCIA : associada
+
+    PROCESSO_SELETIVO ||--o{ AVALIACAO : possui
+    VAGA_ETAPA ||--o{ AVALIACAO : avalia
+    TIPO_AVALIACAO ||--o{ AVALIACAO : define
+    USUARIO ||--o{ AVALIACAO : realiza
+    TEMPO ||--o{ AVALIACAO : registra
+
+    VAGA ||--o{ VAGA_DOCUMENTO_OBRIGATORIO : exige
+    DOCUMENTO_OBRIGATORIO ||--o{ VAGA_DOCUMENTO_OBRIGATORIO : requerido
+
+    CANDIDATO ||--o{ DOCUMENTO_INFORMADO : envia
+    PROCESSO_SELETIVO ||--o{ DOCUMENTO_PROCESSO : possui
+    DOCUMENTO_INFORMADO ||--o{ DOCUMENTO_PROCESSO : vinculado
+    DOCUMENTO_OBRIGATORIO ||--o{ DOCUMENTO_PROCESSO : valida
+
+    VAGA_ETAPA ||--o{ CHECKLIST_ETAPA : possui
+    PROCESSO_SELETIVO ||--o{ CHECKLIST_PROCESSO : acompanha
+    CHECKLIST_ETAPA ||--o{ CHECKLIST_PROCESSO : verifica
+
+    PROCESSO_SELETIVO ||--o{ HISTORICO_PROCESSO : registra
+    USUARIO ||--o{ HISTORICO_PROCESSO : altera
+
+
+    UNIDADE_NEGOCIO {
+        int id_unidade PK
+        string nome_unidade
+    }
+
+    VAGA {
+        int id_vaga PK
+        int id_unidade FK
+        string nome_vaga
+        string descricao_perfil
+        string status_vaga
+        date data_abertura
+        date data_fechamento
+    }
+
+    CANDIDATO {
+        int id_candidato PK
+        string nome_candidato
+        string email
+        string telefone
+        string cpf
+        date data_cadastro
+    }
+
+    PROCESSO_SELETIVO {
+        int id_processo_seletivo PK
+        int id_candidato FK
+        int id_vaga FK
+        int id_status_processo FK
+        date data_inscricao
+        date data_conclusao
+        string resultado_final
+        string observacao
+    }
+
+    STATUS_PROCESSO {
+        int id_status_processo PK
+        string nome_status
+        string descricao_status
+    }
+
+    ETAPA_PROCESSO {
+        int id_etapa PK
+        string nome_etapa
+        string descricao_etapa
+        int ordem_padrao
+    }
+
+    VAGA_ETAPA {
+        int id_vaga_etapa PK
+        int id_vaga FK
+        int id_etapa FK
+        int ordem
+        boolean obrigatoria
+        int prazo_dias
+    }
+
+    COMPETENCIA {
+        int id_competencia PK
+        string nome_competencia
+        string descricao_competencia
+        string tipo_competencia
+    }
+
+    ETAPA_COMPETENCIA {
+        int id_etapa_competencia PK
+        int id_etapa FK
+        int id_competencia FK
+        decimal peso
+        decimal nota_minima
+        boolean obrigatoria
+    }
+
+    AVALIACAO {
+        int id_avaliacao PK
+        int id_processo_seletivo FK
+        int id_vaga_etapa FK
+        int id_tipo_avaliacao FK
+        int id_usuario FK
+        int id_tempo FK
+        decimal nota
+        decimal media
+        string classificacao
+        string resultado
+        string observacao
+        date data_avaliacao
+    }
+
+    TIPO_AVALIACAO {
+        int id_tipo_avaliacao PK
+        string nome_tipo_avaliacao
+        string descricao
+    }
+
+    USUARIO {
+        int id_usuario PK
+        string nome_usuario
+        string email
+        string perfil
+        boolean ativo
+    }
+
+    DOCUMENTO_OBRIGATORIO {
+        int id_documento_obrigatorio PK
+        string nome_documento
+        string descricao
+        boolean obrigatorio
+    }
+
+    VAGA_DOCUMENTO_OBRIGATORIO {
+        int id_vaga_documento PK
+        int id_vaga FK
+        int id_documento_obrigatorio FK
+        boolean obrigatorio
+    }
+
+    DOCUMENTO_INFORMADO {
+        int id_documento_informado PK
+        int id_candidato FK
+        string nome_documento
+        string descricao
+        string caminho_arquivo
+        date data_envio
+        string status_validacao
+    }
+
+    DOCUMENTO_PROCESSO {
+        int id_documento_processo PK
+        int id_processo_seletivo FK
+        int id_documento_informado FK
+        int id_documento_obrigatorio FK
+        string status_validacao
+        date data_validacao
+        string observacao
+    }
+
+    CHECKLIST_ETAPA {
+        int id_checklist PK
+        int id_vaga_etapa FK
+        string descricao_item
+        boolean obrigatorio
+        int ordem
+    }
+
+    CHECKLIST_PROCESSO {
+        int id_checklist_processo PK
+        int id_processo_seletivo FK
+        int id_checklist FK
+        string status
+        date data_conclusao
+        string observacao
+    }
+
+    HISTORICO_PROCESSO {
+        int id_historico PK
+        int id_processo_seletivo FK
+        int id_usuario FK
+        date data_evento
+        string tipo_evento
+        string descricao_evento
+        string status_anterior
+        string status_novo
+    }
+
+    TEMPO {
+        int id_tempo PK
+        date data
+        int dia
+        int mes
+        string nome_mes
+        int trimestre
+        int ano
+        string dia_semana
+    }
