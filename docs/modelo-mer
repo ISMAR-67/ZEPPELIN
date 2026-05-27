@@ -1,5 +1,6 @@
 docs/modelo-mer.md
   # Modelo MER - Processo Seletivo
+```mermaid
 erDiagram
 
     UNIDADE_NEGOCIO ||--o{ VAGA : possui
